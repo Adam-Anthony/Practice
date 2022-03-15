@@ -22,11 +22,14 @@ class Sorts {
         ShowArray(test3);
         ShowArray(result3);
     }
-
+    // Bubble Sort -------------------------------------------------------------------
     public static int[] Bubble(int[] arr){
         int temp = 0;
         for (int i=arr.length-1;i>1;i--){
+            // End of the array is our first goal, for our biggest number
             for (int j=0; j<i; j++){
+                //switch big numbers with their neighbour.
+                // big number 'bubbles up' to the end of the array
                 if (arr[j] > arr[j+1]){
                    temp = arr[j];
                    arr[j]= arr[j+1];
@@ -36,6 +39,7 @@ class Sorts {
         }
         return arr;
     } 
+    // Radix Sort --------------------------------------------------------------
     public static int[] Radix(int[] arr){
         int [] count = {0,0,0,0,0,0,0,0,0,0};
         for (int i=0;i<arr.length;i++){
@@ -51,38 +55,51 @@ class Sorts {
         }
         return fixedArr;
     }
-    // Quick Sort methods
+    // Quick Sort -----------------------------------------------------
     public static int[] Quick(int[] arr){
         SubQuick(arr, 0, arr.length-1);
         return arr;
     }
     public static void SubQuick(int[] arr, int min, int max){
         if (min < max){
+            // Send our current selection to SubSort
             int pivotPoint = SubSort(arr, min, max);
+            // Check Left
             SubQuick(arr, min, pivotPoint - 1);
+            // Check Right
             SubQuick(arr, pivotPoint+1, max);
         }
-        
     }
     public static int SubSort(int[] arr, int min, int max){
         int pivot = arr[max];
+        // movingPoint increases as we find more numbers less than our pivot.
+        /*
+        Our moving point is going to be pointing at the first value higher than our pivot chronologically
+        in the list so that we know where to put our pivot at the end. 
+        */
         int movingPoint = min;
+        // moveVal is updated whenever our movingPoint changes. 
         int moveVal = arr[movingPoint];
         for (int i = min; i< max; i++){
             if (arr[i] <= pivot){
-                int temp = moveVal;
-                arr[movingPoint] = arr[i];
-                arr[i] = temp;
+                if (i!=movingPoint){
+                    int temp = moveVal;
+                    arr[movingPoint] = arr[i];
+                    arr[i] = temp;
+                }
                 movingPoint++; 
                 moveVal = arr[movingPoint];
             }
         }
-        arr[movingPoint] = arr[max];
-        arr[max] = moveVal;
-        
+        // Swap 
+        if(max!=movingPoint){
+            arr[movingPoint] = arr[max];
+            arr[max] = moveVal;
+        }
         return movingPoint;
 
     }
+    // Int array display
     public static void ShowArray(int [] arr){
         for (int i = 0; i<arr.length; i++){
             if(i!=0){
