@@ -1,3 +1,5 @@
+import java.util.concurrent.Flow.Subscriber;
+
 class Sorts {
     public static void main(String[] args) {
         System.out.println("Hey world; What's up?");
@@ -13,6 +15,12 @@ class Sorts {
         int[] result2 = Radix(test2);
         ShowArray(test2);
         ShowArray(result2);
+        System.out.println("Quick");
+        int[] test3 = {1,5,9,4,4,3,6,7};
+        ShowArray(test3);
+        int[] result3 = Quick(test3);
+        ShowArray(test3);
+        ShowArray(result3);
     }
 
     public static int[] Bubble(int[] arr){
@@ -43,8 +51,37 @@ class Sorts {
         }
         return fixedArr;
     }
+    // Quick Sort methods
     public static int[] Quick(int[] arr){
+        SubQuick(arr, 0, arr.length-1);
         return arr;
+    }
+    public static void SubQuick(int[] arr, int min, int max){
+        if (min < max){
+            int pivotPoint = SubSort(arr, min, max);
+            SubQuick(arr, min, pivotPoint - 1);
+            SubQuick(arr, pivotPoint+1, max);
+        }
+        
+    }
+    public static int SubSort(int[] arr, int min, int max){
+        int pivot = arr[max];
+        int movingPoint = min;
+        int moveVal = arr[movingPoint];
+        for (int i = min; i< max; i++){
+            if (arr[i] <= pivot){
+                int temp = moveVal;
+                arr[movingPoint] = arr[i];
+                arr[i] = temp;
+                movingPoint++; 
+                moveVal = arr[movingPoint];
+            }
+        }
+        arr[movingPoint] = arr[max];
+        arr[max] = moveVal;
+        
+        return movingPoint;
+
     }
     public static void ShowArray(int [] arr){
         for (int i = 0; i<arr.length; i++){
