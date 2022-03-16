@@ -2,29 +2,7 @@ import java.util.Random;
 
 class Sorts {
     public static void main(String[] args) {
-        int[] test1 = SingleDigit();
-        System.out.println("-Bubble-");
-        ShowArray(test1);
-        int[] result1 = Bubble(test1);
-        ShowArray(result1);
-        // -----
-        System.out.println("--Count--");
-        int[] test2 = SingleDigit();
-        ShowArray(test2);
-        int[] result2 = Count(test2);
-        ShowArray(result2);
-        // -----
-        System.out.println("---Quick---");
-        int[] test3 = SingleDigit();
-        ShowArray(test3);
-        int[] result3 = Quick(test3);
-        ShowArray(result3);
-        // -----
-        System.out.println("----Radix----");
-        int[] test4 = MultiDigit();
-        ShowArray(test4);
-        int[] result4 = Radix(test4);
-        ShowArray(result4);
+        
     }
     // Bubble Sort -------------------------------------------------------------------
     public static int[] Bubble(int[] arr){
@@ -101,7 +79,7 @@ class Sorts {
         SubQuick(arr, 0, arr.length-1);
         return arr;
     }
-    public static void SubQuick(int[] arr, int min, int max){
+    private static void SubQuick(int[] arr, int min, int max){
         if (min < max){
             // Send our current selection to SubSort
             int pivotPoint = SubSort(arr, min, max);
@@ -111,7 +89,7 @@ class Sorts {
             SubQuick(arr, pivotPoint+1, max);
         }
     }
-    public static int SubSort(int[] arr, int min, int max){
+    private static int SubSort(int[] arr, int min, int max){
         int pivot = arr[max];
         // movingPoint increases as we find more numbers less than our pivot.
         /*
