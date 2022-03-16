@@ -4,10 +4,10 @@ import java.util.regex.Pattern;
 import java.util.regex.MatchResult;
 class DPSCheck{
     public static void main(String[] args){
+        String sample = "1d6 + 1d4 + 1d8 + 3 + 2";
         System.out.println("What is your damage roll?");
-        System.out.println("(Example formating: 2d6 + 1d8 + 2 + 3 + 10)");
-        String abc = "1d6 + 1d4 + 1d8 + 2 + 3";
-        Scanner scan = new Scanner(abc);
+        System.out.println("(Example formating: "+ sample +")");
+        Scanner scan = new Scanner(sample);
         int bonusDamage = 0;
         int signage = 1;
         int[] dice = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
