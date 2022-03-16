@@ -1,26 +1,30 @@
-import java.util.concurrent.Flow.Subscriber;
+import java.util.Random;
 
 class Sorts {
     public static void main(String[] args) {
-        System.out.println("Hey world; What's up?");
-        int[] test1 = {1,5,9,4,4,3,6,7};
-        System.out.println("Bubble");
+        int[] test1 = SingleDigit();
+        System.out.println("-Bubble-");
         ShowArray(test1);
         int[] result1 = Bubble(test1);
-        ShowArray(test1);
         ShowArray(result1);
-        System.out.println("Radix");
-        int[] test2 = {1,5,9,4,4,3,6,7};
+        // -----
+        System.out.println("--Count--");
+        int[] test2 = SingleDigit();
         ShowArray(test2);
-        int[] result2 = Radix(test2);
-        ShowArray(test2);
+        int[] result2 = Count(test2);
         ShowArray(result2);
-        System.out.println("Quick");
-        int[] test3 = {1,5,9,4,4,3,6,7};
+        // -----
+        System.out.println("---Quick---");
+        int[] test3 = SingleDigit();
         ShowArray(test3);
         int[] result3 = Quick(test3);
-        ShowArray(test3);
         ShowArray(result3);
+        // -----
+        System.out.println("----Radix----");
+        int[] test4 = MultiDigit();
+        ShowArray(test4);
+        int[] result4 = Radix(test4);
+        ShowArray(result4);
     }
     // Bubble Sort -------------------------------------------------------------------
     public static int[] Bubble(int[] arr){
@@ -39,21 +43,58 @@ class Sorts {
         }
         return arr;
     } 
-    // Radix Sort --------------------------------------------------------------
-    public static int[] Radix(int[] arr){
+    // Counting Sort --------------------------------------------------------------
+    public static int[] Count(int[] arr){
         int [] count = {0,0,0,0,0,0,0,0,0,0};
+        int[] fixedArr = new int[arr.length];
         for (int i=0;i<arr.length;i++){
+            fixedArr[i] = arr[i];
             count[arr[i]]++;
         }
         for (int i=1; i<count.length;i++){
             count[i] += count[i-1];
         }
-        int [] fixedArr = new int[arr.length];
-        for (int i=0; i<arr.length; i++){
-            count[arr[i]]--;
-            fixedArr[count[arr[i]]] = arr[i];
+        for (int i=arr.length-1;i>=0;i--){
+            count[fixedArr[i]]--;
+            arr[count[fixedArr[i]]] = fixedArr[i];
         }
-        return fixedArr;
+        return arr;
+    }
+    // Radix Sort -----------------------------------------------------------
+    public static int[] Radix(int[] arr){
+        int digits = 1;
+        for (int i=0; i<arr.length; i++){
+            int digiCount = 1;
+            int temp = arr[i] / 10;
+            while(temp!=0){
+                digiCount++;
+                temp = temp / 10;
+            }
+            if (digiCount>digits){
+                digits = digiCount;
+            }
+        }
+        int mod = 1;
+        for (int d=0; d<digits; d++){
+            int[] tempArr = new int[arr.length];
+            int[] fixedArr = new int[arr.length];
+            int low = mod;
+            mod = mod * 10;
+            int[] count = {0,0,0,0,0,0,0,0,0,0};
+            for (int i=0; i<arr.length;i++){
+                fixedArr[i] = arr[i];
+                tempArr[i] = (arr[i]%mod) / low;
+                count[tempArr[i]]++;
+            }
+            for (int j=1; j<count.length;j++){
+                count[j] += count[j-1];
+            }
+            for (int i=arr.length-1;i>=0;i--){
+                count[tempArr[i]]--;
+                arr[count[tempArr[i]]] = fixedArr[i];
+            }
+        }
+        return arr;
     }
     // Quick Sort -----------------------------------------------------
     public static int[] Quick(int[] arr){
@@ -108,5 +149,25 @@ class Sorts {
             System.out.print(arr[i]);
         }
         System.out.println("");
+    }
+
+    public static int[] SingleDigit(){
+        Random r = new Random();
+        int len = r.nextInt(14) + 1;
+        int[] newArr = new int[len];
+        for (int i=0;i<len;i++){
+            newArr[i] = r.nextInt(9);
+        }
+        return newArr;
+    }
+
+    public static int[] MultiDigit(){
+        Random r = new Random();
+        int len = r.nextInt(24) + 5;
+        int[] newArr = new int[len];
+        for (int i=0;i<len;i++){
+            newArr[i] = r.nextInt(9999);
+        }
+        return newArr;
     }
 }
