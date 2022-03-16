@@ -163,7 +163,7 @@ class Sorts {
 
     public static int[] MultiDigit(){
         Random r = new Random();
-        int len = r.nextInt(24) + 5;
+        int len = r.nextInt(24) + 1;
         int[] newArr = new int[len];
         for (int i=0;i<len;i++){
             newArr[i] = r.nextInt(9999);
